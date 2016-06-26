@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Ejercicio2</string>
+    <string name="textUsername">username</string>
+    <string name="textPassword">password</string>
+    <string name="btnRegisterLogin">Register</string>
+    <string name="btnLogin">Login</string>
+    <string name="chkCredentials">Remember credentials</string>
+    <string name="hello" formatted="false" >hello %s welcome</string>
+    <string name="btnFragmentA">FragmentA</string>
+    <string name="btnFragmentB">FragmentB</string>
+    <string name="textItem">Item text</string>
+    <string name="btnAdd">add</string>
+    <string name="delete_title">Delete</string>
+</resources>
