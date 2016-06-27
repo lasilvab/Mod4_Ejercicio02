@@ -26,21 +26,21 @@ public class ItemDataSource {
         contentValues.put(MySqliteHelper.COLUMN_ITEM_NAME,modelItem.item);
         contentValues.put(MySqliteHelper.COLUMN_ITEM_DESC,modelItem.description);
         contentValues.put(MySqliteHelper.COLUMN_ITEM_RESOURCE,modelItem.resourceId);
-        db.insert(MySqliteHelper.TABLE_NAME,null,contentValues);
+        db.insert(MySqliteHelper.TABLE_ITEM_NAME,null,contentValues);
     }
     public void deleteItem(ModelItem modelItem)
     {
-        db.delete(MySqliteHelper.TABLE_NAME,MySqliteHelper.COLUMN_ID+"=?",
+        db.delete(MySqliteHelper.TABLE_ITEM_NAME,MySqliteHelper.COLUMN_ITEM_ID+"=?",
                 new String[]{String.valueOf(modelItem.id)});
     }
 
     public List<ModelItem> getAllItems()
     {
         List<ModelItem> modelItemList = new ArrayList<>();
-        Cursor cursor =db.query(MySqliteHelper.TABLE_NAME,null,null,null,null,null,null);
+        Cursor cursor =db.query(MySqliteHelper.TABLE_ITEM_NAME,null,null,null,null,null,null);
         while (cursor.moveToNext())
         {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(MySqliteHelper.COLUMN_ID));
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(MySqliteHelper.COLUMN_ITEM_ID));
             String itemName=cursor.getString(cursor.getColumnIndexOrThrow(MySqliteHelper.COLUMN_ITEM_NAME));
             String desccription = cursor.getString(cursor.getColumnIndexOrThrow(MySqliteHelper.COLUMN_ITEM_DESC));
             int resourceId = cursor.getInt(cursor.getColumnIndexOrThrow(MySqliteHelper.COLUMN_ITEM_RESOURCE));

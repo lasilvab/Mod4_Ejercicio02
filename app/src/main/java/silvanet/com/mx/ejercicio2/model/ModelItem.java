@@ -5,7 +5,7 @@ package silvanet.com.mx.ejercicio2.model;
  */
 public class ModelItem {
     public int id;
-    public  String description;
     public String item;
+    public  String description;
     public int resourceId;
 }
