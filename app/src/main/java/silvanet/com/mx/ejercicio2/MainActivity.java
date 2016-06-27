@@ -15,6 +15,7 @@ import android.widget.Toast;
 import silvanet.com.mx.ejercicio2.model.ModelUser;
 import silvanet.com.mx.ejercicio2.service.ServiceTimer;
 import silvanet.com.mx.ejercicio2.sql.ItemDataSource;
+import silvanet.com.mx.ejercicio2.sql.UsersDataSource;
 import silvanet.com.mx.ejercicio2.util.PreferenceUtil;
 
 import java.text.SimpleDateFormat;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText mPassword;
     private View loading;
     private PreferenceUtil preferenceUtil;
+    private CheckBox chkRemember;
+    private UsersDataSource userDataSource;
+
 
 
     @Override

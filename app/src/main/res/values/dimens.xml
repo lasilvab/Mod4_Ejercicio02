@@ -5,4 +5,5 @@
     <dimen name="margin_l">16dp</dimen>
     <dimen name="texto_title">19sp</dimen>
     <dimen name="image_size">80dp</dimen>
+    <dimen name="main_btn">20sp</dimen>
 </resources>

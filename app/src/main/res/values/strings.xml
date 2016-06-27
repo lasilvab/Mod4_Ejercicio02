@@ -4,7 +4,7 @@
     <string name="textPassword">password</string>
     <string name="btnRegisterLogin">Register</string>
     <string name="btnLogin">Login</string>
-    <string name="chkCredentials">Remember credentials</string>
+    <string name="chkCredentials">Remember Login</string>
     <string name="hello" formatted="false" >hello %s welcome</string>
     <string name="btnFragmentA">FragmentA</string>
     <string name="btnFragmentB">FragmentB</string>
