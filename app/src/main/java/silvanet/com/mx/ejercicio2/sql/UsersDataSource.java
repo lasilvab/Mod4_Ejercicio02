@@ -43,11 +43,7 @@ public class UsersDataSource {
             String userLastSession = cursor.getColumnName(cursor.getColumnIndexOrThrow(MySqliteHelper.COLUMN_USER_LASTSESSION));
             String userTimeIn = cursor.getColumnName(cursor.getColumnIndexOrThrow(MySqliteHelper.COLUMN_USER_TIMEINAPP));
             ModelUser modelUser = new ModelUser(id,userName,userPWD,userLastSession,userTimeIn,"0");
-            /*modelUser.id=id;
-            modelUser.name=userName;
-            modelUser.pwd=userPWD;
-            modelUser.last_session=userLastSession;
-            modelUser.time_in=userTimeIn;*/
+
             modelUserList.add(modelUser);
         }
         return modelUserList;

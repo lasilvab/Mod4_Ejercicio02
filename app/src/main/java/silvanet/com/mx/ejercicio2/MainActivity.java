@@ -20,6 +20,7 @@ import silvanet.com.mx.ejercicio2.util.PreferenceUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,10 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText mPassword;
     private View loading;
     private PreferenceUtil preferenceUtil;
-    private CheckBox chkRemember;
+    private CheckBox chkRememberMe;
     private UsersDataSource userDataSource;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.activity_main_login).setOnClickListener(this);
         loading=findViewById(R.id.progress);
         findViewById(R.id.btnRegisterLogin).setOnClickListener(this);
+        chkRememberMe = (CheckBox) findViewById(R.id.chkRememberMe);
+        userDataSource = new UsersDataSource(getApplicationContext());
         preferenceUtil= new PreferenceUtil(getApplicationContext());
-        CheckBox checkBox = (CheckBox) findViewById(R.id.chkRememberMe);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ModelUser modelUser =  preferenceUtil.getUser();
+
+
+        chkRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.d(ServiceTimer.TAG,"Esto esta Checkeado: "+isChecked);
