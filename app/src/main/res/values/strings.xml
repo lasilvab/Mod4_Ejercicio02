@@ -11,4 +11,7 @@
     <string name="textItem">Item text</string>
     <string name="btnAdd">add</string>
     <string name="delete_title">Delete</string>
+    <string name="msj_login">Login....!</string>
+    <string name="msj_error_login">Error!!! User and Password necessary</string>
+    <string name="msj_error_user">The User is not found</string>
 </resources>

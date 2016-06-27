@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         */
 
     }
-    
+
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -101,27 +102,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void processData() {
         final String user = mUser.getText().toString();
-        final String pass = mPassword.getText().toString();
+        final String password = mPassword.getText().toString();
         loading.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 loading.setVisibility(View.GONE);
-                ModelUser modelUser = preferenceUtil.getUser();
-                if(modelUser==null)
-                {
-                    Toast.makeText(getApplicationContext(),"Register please",Toast.LENGTH_SHORT).show();
-                }else if(user.equals(modelUser.userName) && pass.equals(modelUser.password))
-                {
-                    Toast.makeText(getApplicationContext(),"Login",Toast.LENGTH_SHORT).show();
-                    Intent intent= new Intent(getApplicationContext(),ActivityDetail.class);
-                    intent.putExtra("key_user",user);
-                    startActivity(intent);
-                    startService(new Intent(getApplicationContext(), ServiceTimer.class));
+
+                // Usuario y Password no sean vacios
+                if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(password)) {
+                    List<ModelUser> modelUserList = userDataSource.getUser(user, password);
+                    if (!modelUserList.isEmpty()) {
+                        date = new SimpleDateFormat("dd-MM-yyyy hh:mm").format(new Date());
+                        if (chkRememberMe.isChecked()) {
+                            preferenceUtil.saveUser(new ModelUser(modelUserList.get(0).id, user, password, date, "0", String.valueOf(lastTime)));
+                        } else {
+                            preferenceUtil.saveUser(new ModelUser(0, "", "", date, "0", String.valueOf(lastTime)));
+                        }
+                        Toast.makeText(getApplicationContext(), getResources().getText(R.string.msj_login), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ActivityDetail.class);
+                        intent.putExtra("id", modelUserList.get(0).id);
+                        intent.putExtra("usuario", modelUserList.get(0).userName);
+                        intent.putExtra("pwd", modelUserList.get(0).password);
+                        intent.putExtra("ischk", chkRememberMe.isChecked());
+                        if (!TextUtils.isEmpty(shared_date)) {
+                            intent.putExtra("date", shared_date);
+                        } else {
+                            intent.putExtra("date", date);
+                        }
+                        intent.putExtra("count_val", lastTime);
+                        intent.putExtra("new_date", date);
+                        startActivity(intent);
+                        startService(new Intent(getApplicationContext(), ServiceTimer.class));
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), getResources().getText(R.string.msj_error_user), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), getResources().getText(R.string.msj_error_login), Toast.LENGTH_LONG).show();
                 }
-                else
-                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
             }
-        },1000*1);
+        }, 1000 * 3);
+
     }
 }
