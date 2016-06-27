@@ -26,15 +26,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText mUser;
     private EditText mPassword;
+    private EditText txtUser;
+    private EditText txtPassword;
     private View loading;
     private PreferenceUtil preferenceUtil;
     private CheckBox chkRememberMe;
     private UsersDataSource userDataSource;
+    private int lastTime=0;
+    private String last_Time;
+    private String shared_date="";
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        txtUser = (EditText) findViewById(R.id.activity_main_user);
+        txtPassword = (EditText) findViewById(R.id.activity_main_password);
         mUser= (EditText) findViewById(R.id.activity_main_user);
         mPassword= (EditText) findViewById(R.id.activity_main_password);
         findViewById(R.id.activity_main_login).setOnClickListener(this);
@@ -45,8 +53,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         preferenceUtil= new PreferenceUtil(getApplicationContext());
         ModelUser modelUser =  preferenceUtil.getUser();
 
+        //Valida de SharedPreferences
+        if(modelUser!=null){
+            if(modelUser.userName.trim().length()>0 && modelUser.password.trim().length()>0){
+                txtUser.setText(modelUser.userName.toString());
+                txtPassword.setText(modelUser.password.toString());
+            }
+            if(modelUser.time_stamp.trim().length()>0){
+                lastTime = Integer.valueOf(modelUser.time_stamp.toString());
+            }else {
+                last_Time="";
+            }
+            if(modelUser.last_session.trim().length()>0){
+                shared_date=modelUser.last_session.toString();
+            }
+        }
 
-        chkRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /** chkRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.d(ServiceTimer.TAG,"Esto esta Checkeado: "+isChecked);
@@ -54,9 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         ((TextView)findViewById(R.id.txtDate))
                 .setText(new SimpleDateFormat("dd-MMM-yy hh:mm").format(new Date()));
+        */
+
     }
-
-
+    
     @Override
     public void onClick(View v) {
         switch (v.getId())
